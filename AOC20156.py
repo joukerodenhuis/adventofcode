@@ -10,26 +10,24 @@ data = {"l-on":0, "do":"", "l":"", "x1":0, "y1": 0, "x2":0, "y2":0}
 instruc = ["turn on", "toggle", "turn off"]
 
 # 3
-lights = {"0,0":"off", }
+lights = {}
 
 list = [AOCinput, data, instruc, lights]
 
-
-# So I guess I want a dict that contains all light coordinates as a key, with all their respective values set to off. Big dict time. Sorry.
+# I want a dict that contains all light coordinates as a key, with all their respective values set to off. Big dict time. Sorry.
 def lightemup(lights):
-    for x in range(1, 1000):
+    for x in range(1000):
         xl = ""
         xl = xl + str(x)
-        for y in range(1, 1000):   
+        for y in range(1000):   
             yl = ""
             yl = yl + str(y)
             t = xl + "," + yl
-            lights.update({t:"off"})
+            lights.update({t:0})
     return(lights)
 
 lights = lightemup(lights)
 list[3] = lights
-
 
 # This function resets all temporary key:values in the data dict
 def rst(list):
@@ -44,7 +42,6 @@ def rst(list):
 
 #This function extracts the four coordinates from the specific line the mainfunc is processing
 def inputhandler(list):
-    i = 0
     l = list[1]["l"]
     match l:
         case l if l.find("turn off") != -1:
@@ -73,41 +70,51 @@ def main(list):
     for l in list[0]:
         list = rst(list)
         list[1]["l"] = l
-        inputhandler(list)
+        list = inputhandler(list)
         x1 = int(list[1]["x1"])
         x2 = int(list[1]["x2"])
         y1 = int(list[1]["y1"])
         y2 = int(list[1]["y2"])
-        match list[1]["do"]:
-            case "turn off":
-                for x in range(x1, x2):
-                    for y in range(y1, y2):
-                        key = str(x) + "," + str(y)
-                        list[3][key] = "off"
-                        if list[1]["l-on"] > 0:
-                                    list[1]["l-on"] -= 1
-            case "toggle":
-                for x in range(x1, x2):
-                    for y in range(y1, y2):
-                        key = str(x) + "," + str(y)
-                        match list[3][key]:
-                            case "off":
-                                list[3][key] = "on"
-                                list[1]["l-on"] += 1
-                            case "on":
-                                list[3][key] = "off"
-                                if list[1]["l-on"] > 0:
-                                    list[1]["l-on"] -= 1
-            case "turn on":
-                for x in range(x1, x2):
-                    for y in range(y1, y2):
-                        key = str(x) + "," + str(y)
-                        list[3][key] = "on"
-                        list[1]["l-on"] += 1
-            case _:
-                print("Um, the do key has a value that is weird. How did you do that?")
-                exit()
+        for x in range(x1, x2 + 1):
+            if x > x2 or x > 999:
+                break
+            for y in range(y1, y2 + 1):
+                if y > y2 or y > 999:
+                    break
+                key = str(x) + "," + str(y)
+                 
+                # Remove everything in the three upper cases, and chuck list[3][key] = (relevantcase) in it for day 1
+                # Day 2 case turn off: if list[3][key] > 0 then list[3][key] -= 1
+                # Day 2 case toggle: list[3][key] += 2
+                # Day 2 case turn on: list[3][key] += 1
+                match list[1]["do"]:
+                    case "turn off":
+                        if list[3][key] > 0:
+                            list[3][key] -= 1
+                    case "toggle":
+                        list[3][key] += 2
+                    case "turn on":
+                        list[3][key] += 1
+                    case _:
+                        print("Um, the \"do\" key has a value that is weird. How did you do that?")
+                        exit()
+                        
+                if y2 == 0:
+                    break
+                    
+        if x2 == 0:
+            break
+            
+    return list
+
+# This function simply analyses how much lights are on or what the brightness is
+# For day one, put an if statement checking for list[3][key] == "on" in the for loop, then list[1]["l-on"] += 1 if true
+# For day two, do list[1]["l-on"] += list[3][key]
+def amounton(list):
+    for key in list[3]:
+        list[1]["l-on"] += list[3][key]
     return list
 
 list = main(list)
+list = amounton(list)
 print(list[1]["l-on"])
