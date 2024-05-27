@@ -117,4 +117,5 @@ def amounton(list):
 
 list = main(list)
 list = amounton(list)
+AOCinput.close()
 print(list[1]["l-on"])
