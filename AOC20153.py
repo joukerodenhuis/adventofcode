@@ -1,7 +1,9 @@
 #The elf had too much eggnog apparently. I want whatever he's having.
 
 # Getting the directions and changing it to a normal string
-AOCinput = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20153.txt")
+AOCfile = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20153.txt")
+AOCinput = AOCfile.readlines()
+AOCfile.close()
 AOCstr = ""
 for element in AOCinput:
     AOCstr = AOCstr + element

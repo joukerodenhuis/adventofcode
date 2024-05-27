@@ -1,7 +1,9 @@
 # There's so many lights on the grid, the imaginary comic artist that draws my life says they no longer has any bulbs to give me ideas!
 
-# 0
-AOCinput = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20156.txt").readlines()
+# 0 (AOCinput)
+AOCfile = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20156.txt")
+AOCinput = AOCfile.readlines()
+AOCfile.close()
 
 # 1
 data = {"l-on":0, "do":"", "l":"", "x1":0, "y1": 0, "x2":0, "y2":0}
@@ -117,5 +119,4 @@ def amounton(list):
 
 list = main(list)
 list = amounton(list)
-AOCinput.close()
 print(list[1]["l-on"])

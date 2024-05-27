@@ -6,7 +6,9 @@ h = 10
 area = 0
 Numbers = "1234567890"
 
-AOCinput = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20152.txt")
+AOCfile = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20152.txt")
+AOCinput = AOCfile.readlines()
+AOCfile.close()
 
 def FileHandler(area):
         a = 0

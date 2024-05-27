@@ -1,7 +1,9 @@
 # AOC20155! Yee boi
 
 # 0
-AOCinput = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20155.txt").readlines()
+AOCfile = open("C:\\Users\\Jouke Rodenhuis\\Github\\adventofcode\\AOC20155.txt")
+AOCinput = AOCfile.readlines()
+AOCfile.close()
 
 # 1
 data = {"nice":0, "aofvow":0, "dble":0, "bad":0, "odo":0}
